@@ -11,10 +11,10 @@ public class Account {
         this("default", "default", "default", "default", 0 );
     }
 
+
+
     public Account(String customerName, String customerEmailAddress, String customerPhoneNumber) {
-        this.customerName = customerName;
-        this.customerEmailAddress = customerEmailAddress;
-        this.customerPhoneNumber = customerPhoneNumber;
+        this("60616", customerName, customerEmailAddress, customerPhoneNumber, 123);
     }
 
     public Account(String number, String customerName, String customerEmailAddress, String customerPhoneNumber, double balance) {

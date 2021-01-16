@@ -13,5 +13,13 @@ public class Main {
         System.out.println(grishaAccount.getBalance());
         System.out.println(grishaAccount.getCustomerEmailAddress());
         System.out.println(grishaAccount.getCustomerName());
+
+        Account tiAccount = new Account("Tim Rot", "tim@gmail", "00 80 888 54 65");
+
+        System.out.println(tiAccount.getBalance());
+        System.out.println(tiAccount.getCustomerEmailAddress());
+        System.out.println(tiAccount.getCustomerName());
+        System.out.println(tiAccount.getCustomerPhoneNumber());
+        tiAccount.withdrawal(45);
     }
 }
