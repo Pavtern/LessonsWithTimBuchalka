@@ -1,4 +1,5 @@
 package ArrayColl.LinkedList.Tim_s;
+
 /**
  * Created by dev on 18/09/15.
  */
