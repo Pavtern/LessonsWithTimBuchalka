@@ -12,12 +12,8 @@ public class League<T extends Player> {
         return name;
     }
 
-    private void sort(){
-        Collections.sort(teams);
-    }
-
     public void print(){
-        this.sort();
+        Collections.sort(teams);
         for (Team t : teams){
             System.out.println(t.getName() + ": " + t.ranking() + " points");
         }
