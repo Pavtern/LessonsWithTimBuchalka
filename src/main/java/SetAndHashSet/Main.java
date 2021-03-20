@@ -22,10 +22,16 @@ public class Main {
         planets.add(tempHeavenly);
         solarSystem.put(tempHeavenly.getName(), tempHeavenly);
 
+        HeavenlyBody earth = new HeavenlyBody("Earth",563);
+        planets.add(earth);
+
         HeavenlyBody tempMoon = new HeavenlyBody("Moon", 27);
         solarSystem.put(tempMoon.getName(), tempMoon);
         tempHeavenly.addMoon(tempMoon);
 
 
+        for(HeavenlyBody planet : planets){
+            System.out.println(planet.getName());
+        }
     }
 }
