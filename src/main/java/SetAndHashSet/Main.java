@@ -33,5 +33,8 @@ public class Main {
         for(HeavenlyBody planet : planets){
             System.out.println(planet.getName());
         }
+
+        String str = "Earth";
+        System.out.println(earth.equals(str));
     }
 }
