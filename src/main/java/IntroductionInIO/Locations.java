@@ -1,8 +1,8 @@
 package IntroductionInIO;
 
+
 import java.io.*;
 import java.util.*;
-import java.util.regex.Pattern;
 
 /**
  * Created by timbuchalka on 2/04/2016.
@@ -11,53 +11,82 @@ public class Locations implements Map<Integer, Location> {
     private static Map<Integer, Location> locations = new HashMap<Integer, Location>();
 
     public static void main(String[] args) throws IOException {
-        File file;
-        try (FileWriter locFile = new FileWriter("locations.txt");
-             FileWriter dirFile = new FileWriter("directions.txt")) {
-            for (Location location : locations.values()) {
-                locFile.write(location.getLocationID() + ", " + location.getDescription() + ";\n");
-                for (String direction : location.getExits().keySet()) {
-                    dirFile.write("location id: " + location.getLocationID() + ", exit: " + direction + ", exit id: " + location.getExits().get(direction) + ";\n");
+        try(FileWriter locFile = new FileWriter("locations.txt");
+            FileWriter dirFile = new FileWriter("directions.txt")) {
+            for(Location location : locations.values()) {
+                locFile.write(location.getLocationID() + "," + location.getDescription() + "\n");
+                for(String direction : location.getExits().keySet()) {
+                    dirFile.write(location.getLocationID() + "," + direction + "," + location.getExits().get(direction) + "\n");
                 }
             }
         }
 //        FileWriter locFile = null;
-//        File file;
 //        try {
 //            locFile = new FileWriter("locations.txt");
-//            for (Location location : locations.values()){
-//                locFile.write(location.getLocationID() + " " + location.getDescription() + ";\n");
+//            for(Location location : locations.values()) {
+//                locFile.write(location.getLocationID() + "," + location.getDescription() + "\n");
 //            }
-//        } catch (IOException e){
-//            System.out.println("In catch block");
-//            e.printStackTrace();
 //        } finally {
-//            System.out.println("In finally block");
-//            try {
-//                if(locFile != null){
-//                    System.out.println("Attempting to close locFile");
-//                    locFile.close();
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
+//            System.out.println("in finally block");
+//            if (locFile != null) {
+//                System.out.println("Attempting to close locfile");
+//                locFile.close();
 //            }
 //        }
     }
 
     static {
-        try (Scanner scan = new Scanner(new FileReader("locations.txt"))) {
-            scan.useDelimiter(",");
-            while (scan.hasNextLine()) {
-                int loc = scan.nextInt();
-                scan.skip(scan.delimiter());
-                String description = scan.nextLine();
+
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(new FileReader("locations.txt"));
+            scanner.useDelimiter(",");
+            while(scanner.hasNextLine()) {
+                int loc = scanner.nextInt();
+                scanner.skip(scanner.delimiter());
+                String description = scanner.nextLine();
                 System.out.println("Imported loc: " + loc + ": " + description);
                 Map<String, Integer> tempExit = new HashMap<>();
                 locations.put(loc, new Location(loc, description, tempExit));
             }
-        } catch (FileNotFoundException e) {
+
+        } catch(IOException e) {
             e.printStackTrace();
+        } finally {
+            if(scanner != null) {
+                scanner.close();
+            }
         }
+
+        // Now read the exits
+        try {
+            scanner = new Scanner(new BufferedReader(new FileReader("directions.txt")));
+            scanner.useDelimiter(",");
+            while(scanner.hasNextLine()) {
+//                int loc = scanner.nextInt();
+//                scanner.skip(scanner.delimiter());
+//                String direction = scanner.next();
+//                scanner.skip(scanner.delimiter());
+//                String dest = scanner.nextLine();
+//                int destination = Integer.parseInt(dest);
+                String input = scanner.nextLine();
+                String[] data = input.split(",");
+                int loc = Integer.parseInt(data[0]);
+                String direction = data[1];
+                int destination = Integer.parseInt(data[2]);
+
+                System.out.println(loc + ": " + direction + ": " + destination);
+                Location location = locations.get(loc);
+                location.addExit(direction, destination);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(scanner != null) {
+                scanner.close();
+            }
+        }
+
 
 //        Map<String, Integer> tempExit = new HashMap<String, Integer>();
 //        locations.put(0, new Location(0, "You are sitting in front of a computer learning Java",null));
@@ -86,8 +115,8 @@ public class Locations implements Map<Integer, Location> {
 //        tempExit.put("S", 1);
 //        tempExit.put("W", 2);
 //        locations.put(5, new Location(5, "You are in the forest",tempExit));
-    }
 
+    }
     @Override
     public int size() {
         return locations.size();
