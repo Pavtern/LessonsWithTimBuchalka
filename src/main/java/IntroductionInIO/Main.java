@@ -20,6 +20,7 @@ public class Main {
 
         Map<String, String> vocabulary = new HashMap<String, String>();
         vocabulary.put("QUIT", "Q");
+        vocabulary.put("EXIT", "Q");
         vocabulary.put("NORTH", "N");
         vocabulary.put("SOUTH", "S");
         vocabulary.put("WEST", "W");
